@@ -5,6 +5,7 @@ import { UserRoutes } from '../modules/user/user.route';
 import { DepartmentRoutes } from '../modules/department/department.route';
 import { DesignationRoutes } from '../modules/designation/designation.route';
 import { WorkstationRoutes } from '../modules/workstation/workstation.route';
+import { EmployeeRoutes } from '../modules/employee/employee.route';
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/workstations',
     route: WorkstationRoutes,
+  },
+  {
+    path: '/employees',
+    route: EmployeeRoutes,
   },
 ];
 
