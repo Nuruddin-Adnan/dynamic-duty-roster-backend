@@ -16,7 +16,11 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 
 const logger = createLogger({
   level: 'info',
-  format: combine(label({ label: 'YOURAPP_NAME' }), timestamp(), myFormat),
+  format: combine(
+    label({ label: 'dynamic-duty-roster' }),
+    timestamp(),
+    myFormat,
+  ),
   transports: [
     new transports.Console(),
     new DailyRotateFile({
@@ -25,7 +29,7 @@ const logger = createLogger({
         'logs',
         'winston',
         'successes',
-        'YOURAPP_NAME-%DATE%-success.log',
+        'dynamic-duty-roster-%DATE%-success.log',
       ),
       datePattern: 'YYYY-DD-MM-HH',
       zippedArchive: true,
@@ -37,7 +41,11 @@ const logger = createLogger({
 
 const errorlogger = createLogger({
   level: 'error',
-  format: combine(label({ label: 'YOURAPP_NAME' }), timestamp(), myFormat),
+  format: combine(
+    label({ label: 'dynamic-duty-roster' }),
+    timestamp(),
+    myFormat,
+  ),
   transports: [
     new transports.Console(),
     new DailyRotateFile({
@@ -46,7 +54,7 @@ const errorlogger = createLogger({
         'logs',
         'winston',
         'errors',
-        'YOURAPP_NAME-%DATE%-error.log',
+        'dynamic-duty-roster-%DATE%-error.log',
       ),
       datePattern: 'YYYY-DD-MM-HH',
       zippedArchive: true,
