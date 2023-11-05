@@ -23,18 +23,13 @@ const employeeRequiredtSchema = new Schema<
       ref: 'Workstation',
       required: true,
     },
-    requiredEmployee: {
-      type: {
-        employeeNumber: {
-          type: Number,
-          required: true,
-        },
-        employeeDesignation: {
-          type: Schema.Types.ObjectId,
-          ref: 'Designation',
-          required: true,
-        },
-      },
+    count: {
+      type: Number,
+      required: true,
+    },
+    designation: {
+      type: Schema.Types.ObjectId,
+      ref: 'Designation',
       required: true,
     },
   },

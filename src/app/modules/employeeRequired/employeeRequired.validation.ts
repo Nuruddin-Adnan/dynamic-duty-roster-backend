@@ -19,23 +19,21 @@ const createEmployeeRequiredZodSchema = z.object({
           message: 'Invalid workstation id',
         },
       ),
-    requiredEmployee: z.object({
-      employeeNumber: z.number({
-        required_error: 'Employee number is required',
-      }),
-      employeeDesignation: z
-        .string({
-          required_error: 'Designation is required',
-        })
-        .refine(
-          value => {
-            return mongoose.Types.ObjectId.isValid(value);
-          },
-          {
-            message: 'Invalid designation id',
-          },
-        ),
+    count: z.number({
+      required_error: 'Employee number is required',
     }),
+    designation: z
+      .string({
+        required_error: 'Designation is required',
+      })
+      .refine(
+        value => {
+          return mongoose.Types.ObjectId.isValid(value);
+        },
+        {
+          message: 'Invalid designation id',
+        },
+      ),
   }),
 });
 

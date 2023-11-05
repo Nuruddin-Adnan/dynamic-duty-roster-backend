@@ -12,10 +12,8 @@ export type IEmployeeRequired = {
     | 'thursday'
     | 'friday';
   workstation: Types.ObjectId | IWorkstation;
-  requiredEmployee: {
-    employeeNumber: number;
-    employeeDesignation: Types.ObjectId | IDesignation;
-  };
+  count: number;
+  designation: Types.ObjectId | IDesignation;
 };
 
 export type EmployeeRequiredModel = Model<

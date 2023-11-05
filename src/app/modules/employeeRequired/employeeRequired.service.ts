@@ -13,8 +13,7 @@ const createEmployeeRequired = async (
   const targetedData = await EmployeeRequired.findOne({
     weekday: payload.weekday,
     workstation: payload.workstation,
-    'requiredEmployee.employeeDesignation':
-      payload.requiredEmployee.employeeDesignation,
+    designation: payload.designation,
   });
 
   if (targetedData) {
@@ -37,7 +36,9 @@ const getAllEmployeeRequireds = async (
     .skip(skip as number)
     .select(fields as string)
     .sort(sort)
-    .limit(limit as number);
+    .limit(limit as number)
+    .populate('workstation')
+    .populate('designation');
 
   const [result, total] = await Promise.all([
     resultQuery.exec(),
@@ -65,7 +66,7 @@ const getSingleEmployeeRequired = async (
 
   const result = await EmployeeRequired.findById(id)
     .populate('workstation')
-    .populate('requiredEmployee.employeeDesignation');
+    .populate('designation');
 
   return result;
 };
@@ -84,31 +85,9 @@ const updateEmployeeRequired = async (
     throw new ApiError(httpStatus.NOT_FOUND, 'Employee required Not found');
   }
 
-  // destructure the {requiredEmployee} for dynamic update of nested value
-  const { requiredEmployee, ...employeeRequiredData } = payload;
-
-  const updatedEmployeeRequiredrData: Partial<IEmployeeRequired> = {
-    ...employeeRequiredData,
-  };
-
-  // dynamically handling
-  if (requiredEmployee && Object.keys(requiredEmployee).length > 0) {
-    Object.keys(requiredEmployee).forEach(key => {
-      const requiredEmployeeKey =
-        `requiredEmployee.${key}` as keyof Partial<IEmployeeRequired>;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (updatedEmployeeRequiredrData as any)[requiredEmployeeKey] =
-        requiredEmployee[key as keyof typeof requiredEmployee];
-    });
-  }
-
-  const result = await EmployeeRequired.findOneAndUpdate(
-    { _id: id },
-    updatedEmployeeRequiredrData,
-    {
-      new: true,
-    },
-  );
+  const result = await EmployeeRequired.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
 
   return result;
 };
